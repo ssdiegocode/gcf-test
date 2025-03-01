@@ -14,7 +14,7 @@ def hello_http(request):
         <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
     """
     print("This script is running")
-    url = "https://hooks.slack.com/services/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"
+    url = os.getenv('SLACK_URL')
     headers = CaseInsensitiveDict()
     headers["Content-Type"] = "application/json"
 
