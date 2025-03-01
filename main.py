@@ -7,28 +7,17 @@ def hello_http(request):
     """HTTP Cloud Function.
     Args:
         request (flask.Request): The request object.
+        <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
     Returns:
         The response text, or any set of values that can be turned into a
-        Response object using `make_response`.
+        Response object using `make_response`
+        <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
     """
     print("This script is running")
-    
-    # Slack webhook URL
-    url = "https://hooks.slack.com/services/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"
+    url = "https://hooks.slack.com/services/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"
     headers = CaseInsensitiveDict()
     headers["Content-Type"] = "application/json"
 
-    # Data to send to Slack
-    data = '{"text":"Github code committed"}'
-    
-    # Send the POST request to Slack
+    data = '{"text":"Github code commited"}'
     resp = requests.post(url, headers=headers, data=data)
-    
-    # Debug: print the status code of the Slack request
-    print("Slack response status:", resp.status_code)
-    
-    # Check if the request was successful
-    if resp.status_code == 200:
-        return "Message sent to Slack successfully!", 200
-    else:
-        return f"Failed to send message to Slack. Status code: {resp.status_code}", 500
+    print(resp.status_code)
