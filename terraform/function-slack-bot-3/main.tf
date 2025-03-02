@@ -9,7 +9,7 @@ resource "google_storage_bucket_object" "function_code" {
   source = "${path.root}/function-slack-bot-3.zip"
 }
 
-resource "google_cloudfunctions_function" "function-slack-bot-3" {
+resource "google_cloudfunctions2_function" "function-slack-bot-3" {
   name        = "function-slack-bot-3"
   runtime     = "python39"
   region      = var.region
