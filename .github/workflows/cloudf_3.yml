@@ -33,11 +33,14 @@ jobs:
 
       # Step to zip the function code using vimtor/action-zip
       - name: Zip Function Code
-        uses: vimtor/action-zip@v1.2
-        with:
-          files: './functions/function-slack-bot-3' 
-          dest: 'function-slack-bot-3.zip' 
+        run: |
+          cd functions/function-slack-bot-3
+          zip -r ../function-slack-bot-3.zip .
+          mv ../function-slack-bot-3.zip $GITHUB_WORKSPACE/function-slack-bot-3.zip
 
+      - name: List files in root directory
+        run: ls -l $GITHUB_WORKSPACE
+        
       # Terraform initialization
       - name: Terraform Init
         run: |
