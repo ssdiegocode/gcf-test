@@ -1,22 +1,47 @@
-name: Deploy Function-2 with gcloud
+name: Deploy to Cloud Functions
+
+env:
+  FUNCTION_NAME: function-slack-bot-2
+  PROJECT_ID: infinite-journey-452400
+  REGION: us-east1
+  ENTRY_POINT: hello_http
 
 on:
   push:
+    branches:
+      - main
     paths:
-      - 'functions/function-slack-bot-2/**'  
+      - 'functions/function-slack-bot-2/**' 
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'functions/function-slack-bot-2/**' 
 
 jobs:
-  deploy:
+  deploy-cloud-function:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Authenticate with Google Cloud
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.GCP_KEY }}
+      - name: Google Cloud Auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_KEY }}'
+          project_id: ${{ env.PROJECT_ID }}
 
-    - name: Deploy Function-2
-      run: gcloud functions deploy function-slack-bot-2 --region=us-east1 --runtime=python39 --trigger-http --allow-unauthenticated --source=functions/function-slack-bot-2/ --entry-point=hello_http
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy Cloud Function
+        run: |
+          gcloud functions deploy ${{ env.FUNCTION_NAME }} \
+            --region=${{ env.REGION }} \
+            --runtime=python39 \
+            --trigger-http \
+            --allow-unauthenticated \
+            --source=functions/function-slack-bot-2/ \
+            --entry-point=${{ env.ENTRY_POINT }}
