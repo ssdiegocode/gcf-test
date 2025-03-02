@@ -23,3 +23,4 @@ def hello_http(request):
     resp = requests.post(url, headers=headers, data=data)
     print(resp.status_code)
     #update test - git version
+    #update test - git version 2
