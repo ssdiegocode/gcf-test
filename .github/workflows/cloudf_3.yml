@@ -25,11 +25,12 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
 
-      # Step to create the zip file in the root directory
+      # Step to zip the function code using vimtor/action-zip
       - name: Zip Function Code
-        run: |
-          cd functions/function-slack-bot-3
-          zip -r ../function-slack-bot-3.zip .
+        uses: vimtor/action-zip@v1.2
+        with:
+          files: 'functions/function-slack-bot-3/*'  # Zipping the contents of the function folder
+          dest: 'function-slack-bot-3.zip'  # Destination zip file in the root directory
 
       # Terraform initialization
       - name: Terraform Init
