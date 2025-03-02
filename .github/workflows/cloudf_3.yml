@@ -28,7 +28,7 @@ jobs:
       - name: Zip Function Code
         run: |
           cd functions/function-slack-bot-3
-          zip -r ../function-slack-bot-3.zip .
+          zip -r ../../function-slack-bot-3.zip .
 
       - name: Terraform Init
         run: |
