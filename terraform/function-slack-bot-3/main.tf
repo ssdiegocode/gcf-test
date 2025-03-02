@@ -39,5 +39,5 @@ resource "google_cloudfunctions2_function" "function-slack-bot-3" {
 resource "google_cloudfunctions2_function_iam_binding" "default-cloudrun" {
   cloud_function = google_cloudfunctions2_function.function-slack-bot-3.name
   role           = "roles/run.invoker"
-  members        = ["allUsers"]  # This makes the function public
+  members        = ["allUsers"]  
 }
