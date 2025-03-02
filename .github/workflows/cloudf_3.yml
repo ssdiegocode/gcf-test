@@ -22,15 +22,21 @@ jobs:
           credentials_json: '${{ secrets.GCP_KEY }}'
           project_id: infinite-journey-452400
 
+      - name: Display current working directory - 1
+        run: pwd
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
+
+      - name: Display current working directory - 2
+        run: pwd
 
       # Step to zip the function code using vimtor/action-zip
       - name: Zip Function Code
         uses: vimtor/action-zip@v1.2
         with:
-          files: 'functions/function-slack-bot-3/*'  # Zipping the contents of the function folder
-          dest: 'function-slack-bot-3.zip'  # Destination zip file in the root directory
+          files: './functions/function-slack-bot-3/*' 
+          dest: 'function-slack-bot-3.zip' 
 
       # Terraform initialization
       - name: Terraform Init
@@ -45,6 +51,9 @@ jobs:
           terraform plan -var="project_id=infinite-journey-452400" \
                          -var="slack_url=${{ secrets.SLACK_URL }}"
 
+      - name: Display current working directory - 3
+        run: pwd
+        
       # Terraform apply to deploy the function
       - name: Terraform Apply
         run: |
