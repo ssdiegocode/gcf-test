@@ -35,7 +35,7 @@ jobs:
       - name: Zip Function Code
         uses: vimtor/action-zip@v1.2
         with:
-          files: './functions/function-slack-bot-3/*' 
+          files: './functions/function-slack-bot-3' 
           dest: 'function-slack-bot-3.zip' 
 
       # Terraform initialization
