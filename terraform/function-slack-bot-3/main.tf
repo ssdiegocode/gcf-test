@@ -35,3 +35,9 @@ resource "google_cloudfunctions2_function" "function-slack-bot-3" {
     }
   }
 }
+
+resource "google_cloudfunctions2_function_iam_member" "function-slack-bot-3-public-access" {
+  function = google_cloudfunctions2_function.function-slack-bot-3.name
+  role     = "roles/cloudfunctions.invoker"
+  member   = "allUsers"  
+}
