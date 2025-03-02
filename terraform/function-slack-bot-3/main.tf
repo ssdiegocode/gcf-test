@@ -11,15 +11,27 @@ resource "google_storage_bucket_object" "function_code" {
 
 resource "google_cloudfunctions2_function" "function-slack-bot-3" {
   name        = "function-slack-bot-3"
-  runtime     = "python39"
-  region      = var.region
-  entry_point = "hello_http"
-  source_archive_bucket = "infinite-journey-452400-functions"  # Bucket existente
-  source_archive_object = google_storage_bucket_object.function_code.name
-  trigger_http = true
-  available_memory_mb = 256
+  location    = var.region
+  description = "Slack Bot Function"
 
-  environment_variables = {
-    SLACK_URL = var.slack_url
+  build_config {
+    runtime    = "python39"       
+    entry_point = "hello_http"    
+
+    source {
+      storage_source {
+        bucket = "infinite-journey-452400-functions"
+        object = google_storage_bucket_object.function_code.name
+      }
+    }
+  }
+
+  service_config {
+    available_memory = "256M"  
+    max_instance_count = 1      
+
+    environment_variables = {
+      SLACK_URL = var.slack_url
+    }
   }
 }
