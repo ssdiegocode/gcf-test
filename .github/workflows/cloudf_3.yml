@@ -1,0 +1,44 @@
+name: Deploy Function-3 with Terraform
+
+on:
+  push:
+    paths:
+      - 'functions/function-slack-bot-3/**' 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_KEY }}'
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: |
+          cd terraform/function-slack-bot-3/
+          terraform init
+
+      - name: Terraform Plan (Optional, for debugging)
+        run: |
+          cd terraform/function-slack-bot-3/
+          terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}" \
+                         -var="slack_url=${{ secrets.SLACK_URL }}"
+
+      - name: Terraform Apply
+        run: |
+          cd terraform/function-slack-bot-3/
+          terraform apply -auto-approve \
+            -var="project_id=${{ secrets.GCP_PROJECT_ID }}" \
+            -var="slack_url=${{ secrets.SLACK_URL }}"
