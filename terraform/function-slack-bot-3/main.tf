@@ -36,10 +36,10 @@ resource "google_cloudfunctions2_function" "function-slack-bot-3" {
   }
 }
 
-resource "google_cloudfunctions2_function_iam_member" "cloud_function_invoker" {
-  project        = google_cloudfunctions2_function.function-slack-bot-3.project
-  location       = google_cloudfunctions2_function.function-slack-bot-3.location
-  cloud_function = google_cloudfunctions2_function.function-slack-bot-3.name
-  role           = "roles/cloudfunctions.invoker"
-  member         = "allUsers"
+resource "google_cloud_run_service_iam_member" "public_access" {
+  location = google_cloudfunctions2_function.function-slack-bot-3.location
+  project  = google_cloudfunctions2_function.function-slack-bot-3.project
+  service  = google_cloudfunctions2_function.function-slack-bot-3.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
 }
