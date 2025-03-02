@@ -3,7 +3,7 @@ name: Deploy Function-3 with Terraform
 on:
   push:
     paths:
-      - 'functions/function-slack-bot-3/**' 
+      - 'functions/function-slack-bot-3/**'
 
 jobs:
   deploy:
@@ -20,27 +20,31 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_KEY }}'
-          project_id:  infinite-journey-452400
+          project_id: infinite-journey-452400
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
 
+      # Step to create the zip file in the root directory
       - name: Zip Function Code
         run: |
           cd functions/function-slack-bot-3
           zip -r ../function-slack-bot-3.zip .
 
+      # Terraform initialization
       - name: Terraform Init
         run: |
           cd terraform/function-slack-bot-3/
           terraform init
 
+      # Terraform plan (optional step for debugging)
       - name: Terraform Plan (Optional, for debugging)
         run: |
           cd terraform/function-slack-bot-3/
           terraform plan -var="project_id=infinite-journey-452400" \
                          -var="slack_url=${{ secrets.SLACK_URL }}"
 
+      # Terraform apply to deploy the function
       - name: Terraform Apply
         run: |
           cd terraform/function-slack-bot-3/
