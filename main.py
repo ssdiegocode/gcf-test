@@ -22,4 +22,4 @@ def hello_http(request):
     data = '{"text":"Github code commited - for function two"}'
     resp = requests.post(url, headers=headers, data=data)
     print(resp.status_code)
-    #update test
+    #update test - git version
