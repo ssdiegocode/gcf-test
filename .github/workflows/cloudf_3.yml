@@ -25,6 +25,11 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
 
+      - name: Zip Function Code
+        run: |
+          cd functions/function-slack-bot-3
+          zip -r ../function-slack-bot-3.zip .
+
       - name: Terraform Init
         run: |
           cd terraform/function-slack-bot-3/
