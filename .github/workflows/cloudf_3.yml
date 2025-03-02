@@ -60,7 +60,6 @@ jobs:
       # Terraform apply to deploy the function
       - name: Terraform Apply
         run: |
-          cd terraform/function-slack-bot-3/
-          terraform apply -auto-approve \
-            -var="project_id=infinite-journey-452400" \
-            -var="slack_url=${{ secrets.SLACK_URL }}"
+          cd $GITHUB_WORKSPACE
+          terraform apply -auto-approve -var="project_id=infinite-journey-452400" -var="slack_url=${{ secrets.SLACK_URL }}"
+      
