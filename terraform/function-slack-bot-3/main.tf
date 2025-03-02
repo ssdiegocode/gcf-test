@@ -6,7 +6,7 @@ provider "google" {
 resource "google_storage_bucket_object" "function_code" {
   name   = "function-slack-bot-3-source.zip"
   bucket = "infinite-journey-452400-functions"  
-  source = "./function-slack-bot-3.zip"
+  source = "${path.root}/function-slack-bot-3.zip"
 }
 
 resource "google_cloudfunctions_function" "function-slack-bot-3" {
