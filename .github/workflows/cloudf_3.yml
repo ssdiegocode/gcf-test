@@ -56,7 +56,11 @@ jobs:
 
       - name: Display current working directory - 3
         run: pwd
-        
+
+      - name: Verify Zip Path
+        run: |
+          ls -l $GITHUB_WORKSPACE
+          
       # Terraform apply to deploy the function
       - name: Terraform Apply
         run: |
