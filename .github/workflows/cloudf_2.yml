@@ -1,0 +1,29 @@
+name: Deploy Function-2 with gcloud
+
+on:
+  push:
+    paths:
+      - 'functions/function-slack-bot-2/**'  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Authenticate with Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_KEY }}
+
+    - name: Deploy Function-2
+      run: |
+        gcloud functions deploy function-slack-bot-2 \
+          --region=us-east1 \
+          --runtime=python39 \
+          --trigger-http \
+          --allow-unauthenticated \
+          --source=functions/function-slack-bot-2/ \ 
+          --entry-point=hello_http
