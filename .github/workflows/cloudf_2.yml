@@ -19,11 +19,4 @@ jobs:
         credentials_json: ${{ secrets.GCP_KEY }}
 
     - name: Deploy Function-2
-      run: |
-        gcloud functions deploy function-slack-bot-2 \
-          --region=us-east1 \
-          --runtime=python39 \
-          --trigger-http \
-          --allow-unauthenticated \
-          --source=functions/function-slack-bot-2/ \ 
-          --entry-point=hello_http
+      run: gcloud functions deploy function-slack-bot-2 --region=us-east1 --runtime=python39 --trigger-http --allow-unauthenticated --source=functions/function-slack-bot-2/ --entry-point=hello_http
